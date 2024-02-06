@@ -1,4 +1,5 @@
 import random
+import time
 
 class game:
     
@@ -10,6 +11,7 @@ class game:
         number = random.randint(0, maxnum)
         
         while guesses > 0:
+            print(f"You have {guesses} guess/es left")
             while True:
                 try:
                     userGuess = int(input("Which number do you think I chose?\nInput: "))
@@ -51,13 +53,51 @@ class game:
         print(f"\nYOUR GAMESTATS:\nWins:\t{self.wins}\nLoses:\t{self.loses}\n")
         return
     
+    def turnaround(self):
+        while True:
+            try:
+                number = 101
+                while number > 100 or number < 0:
+                    number = int(input("What is your secret number? (Must be between 0 and 100)\nInput: "))
+                break
+            except:
+                print("ERROR: Input not int")
+
+        guesses = 6
+        maxguess = 100
+        lowguess = 0
+
+        while guesses > 0:
+            print(f"Computer has {guesses} guess/es left")
+            guess = random.randint(lowguess, maxguess)
+            time.sleep(2)
+
+            print(f"\nComputer guessed {guess}")
+            time.sleep(2.5)
+            if guess == number:
+                print("It was your number! Computer won!")
+                time.sleep(2)
+                self.loses += 1
+                return
+            elif guess > number:
+                print("It's higher than your number")
+                maxguess = guess - 1
+            else:
+                print("It'S lower than your number")
+                lowguess = guess + 1
+
+            guesses -= 1
+        
+        self.wins += 1
+        return
+    
 if __name__ == "__main__":
     print("Welcome to GuessTheNumber PyObject Ed.")
     theGame = game()
 
     while True:
         try:
-            userchoice = int(input("\nWhat do you want to do?\n1) Play the game standard edition\n2) Play the game with custom rules\n3) Print Statistics\n4) End the program\n\nInput: "))
+            userchoice = int(input("\nWhat do you want to do?\n1) Play the game standard edition\n2) Play the game with custom rules\n3) Print Statistics\n4) Computer guesses your number\n5) End the program\n\nInput: "))
         except:
             print("ERROR: Input not int")
         
@@ -68,6 +108,8 @@ if __name__ == "__main__":
         elif userchoice == 3:
             theGame.stats()
         elif userchoice == 4:
+            theGame.turnaround()
+        elif userchoice == 5:
             break
     
     theGame.stats()
