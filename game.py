@@ -47,6 +47,10 @@ class game:
         self.ranGame(maxnum, guesses)
         return
     
+    def stats(self):
+        print(f"\nYOUR GAMESTATS:\nWins:\t{self.wins}\nLoses:\t{self.loses}\n")
+        return
+    
 if __name__ == "__main__":
     print("Welcome to GuessTheNumber PyObject Ed.")
     theGame = game()
@@ -62,8 +66,9 @@ if __name__ == "__main__":
         elif userchoice == 2:
             theGame.custom()
         elif userchoice == 3:
-            print("You found a bug, this feature is not available yet")
+            theGame.stats()
         elif userchoice == 4:
             break
     
+    theGame.stats()
     print("Thank you for playing the game, see you next time :)")
